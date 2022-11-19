@@ -52,9 +52,42 @@ def paso2(matriz_a):
 
     return matriz_b
 
-""" asignaciones """
-#def paso3(matriz_a):
+""" realiza todas las asignaciones posibles """
+def paso3(matriz_a):
+    exito = False
+
+    for i in range(len(matriz_a)):
+        for j in range(len(matriz_a)):
+            if matriz_a[i][j] == 0:
+                
+                if posibleAsg(matriz_a, i, j):
+                    matriz_a[i][j] = "x";
+                    
+                    paso3(matriz_a)
+                    
+                    # si hay igual de asignaciones que el tamaño de la tabla, termina
+                    if sum([x.count("x") for x in matriz_a]) == len(matriz_a):
+                        exito = True
+                        break
+
+                    matriz_a[i][j] = 0
+
+    return matriz_a, exito
+
+
+""" identifica si la casilla es apta para asignacion """
+def posibleAsg(matriz_b, x, y): 
+    for i in range(len(matriz_b)):
+        if matriz_b[x][i] == "x": 
+            return False
+        
+        if matriz_b[i][y] == "x":
+            return False
+
+    return True
     
+
+#def paso4(matriz_a):
 
 
 def main():
@@ -68,6 +101,13 @@ def main():
 
    matriz_a = paso2(matriz_a)
    print(tabulate(matriz_a, headers=titulos, tablefmt="psql"))
+
+   matriz_a, exito = paso3(matriz_a)
+
+   if(!exito):
+       print(tabulate(matriz_a, headers=titulos, tablefmt="psql"))
+
+
 
 
 
