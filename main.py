@@ -20,6 +20,12 @@ def defTabla():
            [190,210,200,200],
            [200,180,240,220],
            [220,180,210,230]]
+    """
+    return[[3,5,3,3],
+           [5,14,10,10],
+           [12,6,19,17],
+           [2,17,10,12]]
+    """
 
 
 """ seleccionar el valor mas pequeño de cada columna y restarlo con la columna """
@@ -63,7 +69,7 @@ def paso3(matriz_a, recursivo):
                 if posibleAsg(matriz_a, i, j):
                     matriz_a[i][j] = "x";
                    
-                    if(recursivo):
+                    if recursivo:
                         paso3(matriz_a, recursivo)
                     
                         # si hay igual de asignaciones que el tamaño de la tabla, termina
@@ -71,7 +77,7 @@ def paso3(matriz_a, recursivo):
                             exito = True
                             break
 
-                            matriz_a[i][j] = 0
+                        matriz_a[i][j] = 0
 
     return matriz_a, exito
 
@@ -121,7 +127,45 @@ def paso4(matriz_a):
         
         matriz_b.append(fila)
 
-    return matriz_b
+    return matriz_b, m_b
+
+""" suma el menor val a las casillas sin - y lo suma a los demas """
+def paso5(matriz_a, matriz_c, col_m):
+    matriz_d = []
+
+    min_mb = []
+
+    for i in range(len(matriz_a)):  # obtiene el minimo excluyendo "-"
+        for j in range(len(matriz_a)):
+            if matriz_c[i][j] != "-":
+                min_mb.append(matriz_c[i][j])
+
+    min_mb = min(min_mb)
+
+    for i in range(len(matriz_a)):
+        fila = []
+        for j in range(len(matriz_a)):
+            if matriz_c[i][j] != "-":  # casillas no rayadas - val min
+                if matriz_a[i][j] == "x":
+                    fila.append(0)
+
+                else:
+                    fila.append(matriz_a[i][j] - min_mb)
+
+            else:
+                if matriz_a[i][j] == "x": 
+                    fila.append(0)
+
+                elif j in col_m and matriz_a[i][j] != 0: # col_m + val min
+                    fila.append(matriz_a[i][j] + min_mb)
+
+                else:
+                    fila.append(matriz_a[i][j])
+
+        
+        matriz_d.append(fila)
+
+    return matriz_d
 
 
 
@@ -136,12 +180,19 @@ def main():
    print(tabulate(matriz_a, headers=titulos, tablefmt="psql"))
 
    matriz_a = paso2(matriz_a)
+   print("Matriz a")
    print(tabulate(matriz_a, headers=titulos, tablefmt="psql"))
 
-   matriz_a, exito = paso3(matriz_a, True)
+   matriz_b, exito = paso3(matriz_a, True)
 
    if not exito:
-       matriz_b = paso4(matriz_a)
+       matriz_c, col_m = paso4(matriz_b)
+       print(tabulate(matriz_c, headers=titulos, tablefmt="psql"))
+
+       matriz_d = paso5(matriz_a, matriz_c, col_m)
+       print(tabulate(matriz_d, headers=titulos, tablefmt="psql"))
+       
+       matriz_b, exito = paso3(matriz_d, True)
        print(tabulate(matriz_b, headers=titulos, tablefmt="psql"))
 
    else:
