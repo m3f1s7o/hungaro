@@ -53,7 +53,7 @@ def paso2(matriz_a):
     return matriz_b
 
 """ realiza todas las asignaciones posibles """
-def paso3(matriz_a):
+def paso3(matriz_a, recursivo):
     exito = False
 
     for i in range(len(matriz_a)):
@@ -62,15 +62,16 @@ def paso3(matriz_a):
                 
                 if posibleAsg(matriz_a, i, j):
                     matriz_a[i][j] = "x";
+                   
+                    if(recursivo):
+                        paso3(matriz_a, recursivo)
                     
-                    paso3(matriz_a)
-                    
-                    # si hay igual de asignaciones que el tamaño de la tabla, termina
-                    if sum([x.count("x") for x in matriz_a]) == len(matriz_a):
-                        exito = True
-                        break
+                        # si hay igual de asignaciones que el tamaño de la tabla, termina
+                        if sum([x.count("x") for x in matriz_a]) == len(matriz_a):
+                            exito = True
+                            break
 
-                    matriz_a[i][j] = 0
+                            matriz_a[i][j] = 0
 
     return matriz_a, exito
 
@@ -86,14 +87,49 @@ def posibleAsg(matriz_b, x, y):
 
     return True
     
+""" marca filas y columnas """
+def paso4(matriz_a):
+    matriz_a, e = paso3(matriz_a, False)
+    
+    m_a = []  # filas que no tienen asignaciones
+    for i in range(len(matriz_a)):
+        if matriz_a[i].count("x") == 0:
+            m_a.append(i)
 
-#def paso4(matriz_a):
+    m_b = []  # columnas con 0 en las filas de la marca a
+    for i in range(len(matriz_a)):
+        for j in range(len(m_a)):
+            if matriz_a[m_a[j]][i] == 0:
+                m_b.append(i)
+    
+    m_c = []  # filas con asignacion de las col de la marca b
+    for i in range(len(matriz_a)):
+        for j in range(len(m_b)):
+            if matriz_a[i][m_b[j]] == "x":
+                m_c.append(i)
+
+    # linea en las casillas de filas que no estan marcadas y columnas marcadas
+    matriz_b = []
+    for i in range(len(matriz_a)):
+        fila = []
+        for j in range(len(matriz_a)):
+            if (i in m_a or i in m_c) and j not in m_b:
+                fila.append(matriz_a[i][j])
+            
+            else:
+                fila.append("-")
+        
+        matriz_b.append(fila)
+
+    return matriz_b
+
 
 
 def main():
    #matriz = obtnrTabla()
    matriz = defTabla()
    titulos = ["C" + str(i) for i in range(len(matriz))]
+
    print(tabulate(matriz, headers=titulos, tablefmt="psql"))
 
    matriz_a = paso1(matriz)
@@ -102,9 +138,13 @@ def main():
    matriz_a = paso2(matriz_a)
    print(tabulate(matriz_a, headers=titulos, tablefmt="psql"))
 
-   matriz_a, exito = paso3(matriz_a)
+   matriz_a, exito = paso3(matriz_a, True)
 
-   if(!exito):
+   if not exito:
+       matriz_b = paso4(matriz_a)
+       print(tabulate(matriz_b, headers=titulos, tablefmt="psql"))
+
+   else:
        print(tabulate(matriz_a, headers=titulos, tablefmt="psql"))
 
 
