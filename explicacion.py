@@ -11,6 +11,9 @@ def explicacion(matriz, matriz_c):
         row_s = [row+1, col+1, matriz[row][col]]
         sol.append(row_s)
         
-    print(tabulate(sol, titulos, tablefmt="psql"))
-    print(f"z = {sum([x[2] for x in sol])}")
+    #print(tabulate(sol, titulos, tablefmt="psql"))
+    #print(f"z = {}sum([x[2] for x in sol])")
+    z = sum([x[2] for x in sol])
+
+    return sol, z
 
