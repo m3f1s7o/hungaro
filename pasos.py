@@ -1,4 +1,4 @@
-#!/bin/python3
+#! /bin/python3
 
 def obtnrTabla():
     dim = int(input("Dimensiones de la tabla(NxN) N: "));
@@ -15,14 +15,15 @@ def obtnrTabla():
     return matriz
 
 def defTabla():
-#    return[[230,200,210,240],
-#           [190,210,200,200],
-#           [200,180,240,220],
-#           [220,180,210,230]]
-    return[[3,5,3,3],
+    matriz1 = [[230,200,210,240],
+           [190,210,200,200],
+           [200,180,240,220],
+           [220,180,210,230]]
+    matriz2 = [[3,5,3,3],
            [5,14,10,10],
            [12,6,19,17],
            [2,17,10,12]]
+    return matriz1
 
 """ seleccionar el valor mas pequeño de cada columna y restarlo con la columna """
 def paso1(matriz):
@@ -58,34 +59,34 @@ def paso2(matriz_a):
 def paso3(matriz, meta):
     exito = False
 
-    for i in range(len(matriz)):
+    for i in range(len(matriz)):  # recorre toda la matriz
         for j in range(len(matriz)):
             if matriz[i][j] == 0:
                 
-                if posibleAsg(matriz, i, j):
+                if posibleAsg(matriz, i, j):  # revisa que la casilla donde hay un 0 pueda asignarse
                     matriz[i][j] = "x";
                    
-                    if not exito:
+                    if not exito:  # recursividad
                         paso3(matriz, meta)
                     
-                        # si hay igual de asignaciones que el tamaño de la tabla, termina porque se encontro la solucion
+                        # si hay igual de asignaciones que la meta, termina porque se encontro la solucion
                         if sum([x.count("x") for x in matriz]) == meta:
                             exito = True
                             break
 
-                        # reset a la casilla
+                        # resetea la casilla a cero para poder seguir buscando soluciones
                         matriz[i][j] = 0
 
     return matriz, exito
 
 
 """ identifica si la casilla es apta para asignacion (si no hay otra casilla asignada en la misma fila y columna) """
-def posibleAsg(matriz_b, x, y): 
+def posibleAsg(matriz_b, x, y):
     for i in range(len(matriz_b)):
-        if matriz_b[x][i] == "x": 
+        if matriz_b[x][i] == "x":  # si hay una x en la fila, no es posible
             return False
         
-        if matriz_b[i][y] == "x":
+        if matriz_b[i][y] == "x":  # si hay una x en la columna, no es posible
             return False
 
     return True
