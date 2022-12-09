@@ -2,31 +2,33 @@
 from tabulate import tabulate
 from pasos import *
 from explicacion import *
+from datos import *
 
+""" funcion de testeo para resolver por terminal """
 def main():
-   # matriz = obtnrTabla()
-    matriz = defTabla()
+    #tabla = obtnrTabla()
+    tabla = defTabla()
 
-    print_t = lambda matriz_n: print(tabulate(matriz_n, headers=["C" + str(i) for i in range(len(matriz))], tablefmt="psql"))  # imprime la matriz en una tabla con formato
+    print_t = lambda tabla_n: print(tabulate(tabla_n, headers=["C" + str(i) for i in range(len(tabla))], tablefmt="psql"))  # imprime la tabla en una tabla con formato
 
 
     # tabla original
-    print_t(matriz)
+    print_t(tabla)
 
     # tabla original - min c columna
-    matriz_a = paso1(matriz)
+    tabla1 = paso1(tabla)
     print("Paso 1")
-    #print_t(matriz_a)
+    print_t(tabla1)
 
     # tabla - min c fila
-    matriz_b = paso2(matriz_a)
+    tabla2 = paso2(tabla1)
     print("Paso 2")
-    #print_t(matriz_b)
+    print_t(tabla2)
 
     # tabla asignaciones
-    matriz_c, exito = paso3(matriz_b, len(matriz))
+    tabla3, exito = paso3(tabla2, len(tabla))
     print("Paso 3")
-    #print_t(matriz_c)
+    print_t(tabla3)
 
     # termina con la solucion del problema o cuando se agoten los intentos
     intentos = 0
@@ -35,63 +37,65 @@ def main():
             print(f"\n\nIntento {intentos}")
 
         # tabla rayada
-        matriz_d, col_m = paso4(matriz_c)
+        tabla4, col_m = paso4(tabla3)
         print("Paso 4")
-        #print_t(matriz_d)
+        print_t(tabla4)
 
         # menor de las no rayadas
-        matriz_e = paso5(matriz_b, matriz_d, col_m)
+        tabla5 = paso5(tabla2, tabla4, col_m)
         print("Paso 5")
-        #print_t(matriz_e)
+        print_t(tabla5)
        
         # asignaciones
-        matriz_c, exito = paso3(matriz_e, len(matriz))
+        tabla3, exito = paso3(tabla5, len(tabla))
         print("Paso 3")
-        #print_t(matriz_c)
+        print_t(tabla3)
         
         intentos += 1
 
     if exito:
         print("Solucion")
-        print_t(matriz_c)
-        explicacion(matriz, matriz_c)
+        print_t(tabla3)
+        explicacion(tabla, tabla3)
 
     else:
         print("No se pudo dar solucion al problema")
 
-def resolver(matriz):
+
+""" funcion para resolver con gui """
+def resolver(tabla):
     # tabla original - min c columna
-    matriz_a = paso1(matriz)
+    tabla1 = paso1(tabla)
 
     # tabla - min c fila
-    matriz_b = paso2(matriz_a)
+    tabla2 = paso2(tabla1)
 
     # tabla asignaciones
-    matriz_c, exito = paso3(matriz_b, len(matriz))
+    tabla3, exito = paso3(tabla2, len(tabla))
 
     # termina con la solucion del problema o cuando se agoten los intentos
     intentos = 0
     while(not exito and intentos <= 10):
         # tabla rayada
-        matriz_d, col_m = paso4(matriz_c)
+        tabla4, col_m = paso4(tabla3)
 
         # menor de las no rayadas
-        matriz_e = paso5(matriz_b, matriz_d, col_m)
+        tabla5 = paso5(tabla2, tabla4, col_m)
        
         # asignaciones
-        matriz_c, exito = paso3(matriz_e, len(matriz))
+        tabla3, exito = paso3(tabla5, len(tabla))
         
         intentos += 1
 
     if exito:
-        expli, z = explicacion(matriz, matriz_c)
+        expli, z = explicacion(tabla, tabla3)
 
-        return matriz_c, expli, z
+        return tabla3, expli, z
 
     else:
         #print("No se pudo dar solucion al problema")
 
-        return matriz_c, None, None
+        return tabla3, None, None
 
 
 

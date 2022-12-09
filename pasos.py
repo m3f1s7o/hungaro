@@ -1,66 +1,44 @@
 #! /bin/python3
 
-def obtnrTabla():
-    dim = int(input("Dimensiones de la tabla(NxN) N: "));
-
-    matriz = []
-    tmp = []
-    
-    for i in range(dim):
-        row = input(f"Valores de la fila {i} (1,2,..,n): ")
-        
-        # separa los numeros de cada fila y los pone en una lista como enteros
-        matriz.append([int(x) for x in row.split(",")])
-
-    return matriz
-
-def defTabla():
-    matriz1 = [[230,200,210,240],
-           [190,210,200,200],
-           [200,180,240,220],
-           [220,180,210,230]]
-    matriz2 = [[3,5,3,3],
-           [5,14,10,10],
-           [12,6,19,17],
-           [2,17,10,12]]
-    return matriz1
-
-""" seleccionar el valor mas pequeño de cada columna y restarlo con la columna """
+""" selecciona el valor mas pequeño de cada columna y lo resta con la columna """
 def paso1(matriz):
+    tam = len(matriz)
 
-    min_col = []
-    for i in range(len(matriz)):
+    min_col = []  # para almacenar los minimos
+    for i in range(tam):
        min_col.append(min([c[i] for c in matriz]))  # obtiene el val minimo de cada columna 
     
-    matriz_a = []
-    for i in range(len(matriz)):  # resta el minimo de cada columna con toda la columna
+    nueva_m = []
+    for i in range(tam):  # resta el minimo de cada columna con toda la columna
         fila = [int(f) - int(m) for f, m in zip(matriz[i], min_col)] 
 
-        matriz_a.append(fila)
+        nueva_m.append(fila)
 
-    return matriz_a
+    return nueva_m
     
-""" seleccionar el valor mas pequeño de cada fila y restarlo con la fila """
-def paso2(matriz_a):
-    min_fil = []
+""" selecciona el valor mas pequeño de cada fila y lo resta con la fila """
+def paso2(matriz):
+    tam = len(matriz)
+    min_fil = []  # para almacenar los minimos de cada fila
 
-    for fila in matriz_a:
+    for fila in matriz:
         min_fil.append(min(fila))  # obtiene el min valor de cada fila
     
-    matriz_b = []
-    for i in range(len(matriz_a)):  # resta el minimo de cada fila con toda la fila
-        fila = [int(f) - min_fil[i] for f in matriz_a[i]]
+    nueva_m = []
+    for i in range(tam):  # resta el minimo de cada fila con toda la fila
+        fila = [int(f) - min_fil[i] for f in matriz[i]]
 
-        matriz_b.append(fila)
+        nueva_m.append(fila)
 
-    return matriz_b
+    return nueva_m
 
 """ realiza todas las asignaciones posibles """
 def paso3(matriz, meta):
+    tam = len(matriz)
     exito = False
 
-    for i in range(len(matriz)):  # recorre toda la matriz
-        for j in range(len(matriz)):
+    for i in range(tam):  # recorre toda la matriz
+        for j in range(tam):
             if matriz[i][j] == 0:
                 
                 if posibleAsg(matriz, i, j):  # revisa que la casilla donde hay un 0 pueda asignarse
@@ -91,77 +69,79 @@ def posibleAsg(matriz_b, x, y):
 
     return True
     
-""" marca filas y columnas """
-def paso4(matriz_a):
-    matriz_a, e = paso3(matriz_a, len(matriz_a)-1)
+""" marca filas y columnas cuando no se encuentra una solución para la matriz en el paso 3 """
+def paso4(matriz):
+    tam = len(matriz)
+    matriz, e = paso3(matriz, tam-1)  # obtiene una matriz con las asignaciones requeridas -1
     
-    m_a = []  # filas que no tienen asignaciones
-    for i in range(len(matriz_a)):
-        if matriz_a[i].count("x") == 0:
-            m_a.append(i)
+    marca_a = []  # filas que no tienen asignaciones
+    for i in range(tam):
+        if matriz[i].count("x") == 0:
+            marca_a.append(i)
 
-    m_b = []  # columnas con 0 en las filas de la marca a
-    for i in range(len(matriz_a)):
-        for j in range(len(m_a)):
-            if matriz_a[m_a[j]][i] == 0:
-                m_b.append(i)
+    marca_b = []  # columnas con 0 en las filas de la marca a
+    for i in range(tam):
+        for j in range(len(marca_a)):
+            if matriz[marca_a[j]][i] == 0:
+                marca_b.append(i)
     
-    m_c = []  # filas con asignacion de las col de la marca b
-    for i in range(len(matriz_a)):
-        for j in range(len(m_b)):
-            if matriz_a[i][m_b[j]] == "x":
-                m_c.append(i)
+    marca_c = []  # filas con asignacion de las col de la marca b
+    for i in range(tam):
+        for j in range(len(marca_b)):
+            if matriz[i][marca_b[j]] == "x":
+                marca_c.append(i)
 
     # linea en las casillas de filas que no estan marcadas y columnas marcadas
-    matriz_b = []
-    for i in range(len(matriz_a)):
+    nueva_m = []
+    for i in range(tam):
         fila = []
-        for j in range(len(matriz_a)):
-            if (i in m_a or i in m_c) and j not in m_b:
-                fila.append(matriz_a[i][j])
+        for j in range(tam):
+            if (i in marca_a or i in marca_c) and j not in marca_b:
+                fila.append(matriz[i][j])
             
             else:
                 fila.append("-")
         
-        matriz_b.append(fila)
+        nueva_m.append(fila)
 
-    return matriz_b, m_b
+    return nueva_m, marca_b
 
-""" suma el menor val a las casillas sin - y lo suma a los demas """
-def paso5(matriz_a, matriz_c, col_m):
-    matriz_d = []
+""" resta el valor menor a las casillas sin '-' y lo suma a los demas """
+def paso5(matriz_ref, matriz_ray, marca_b):  # se reciben dos matrices para comparar la matriz rayada con la original
+    tam = len(matriz_ref)
+    nueva_m = []
 
-    min_mb = []
+    val_min = []  # almacena todos los valores que no sean '-' ni 'x'
 
-    for i in range(len(matriz_a)):  # obtiene el minimo excluyendo "-"
-        for j in range(len(matriz_a)):
-            if matriz_c[i][j] != "-":
-                min_mb.append(matriz_c[i][j])
+    for i in range(tam):  # obtiene el minimo excluyendo "-"
+        for j in range(tam):
+            if matriz_ray[i][j] != "-":
+                val_min.append(matriz_ray[i][j])
 
-    min_mb = min(min_mb)
+    val_min = min(val_min)  # obtiene el valor minimo de la matriz
 
-    for i in range(len(matriz_a)):
+    for i in range(tam):
         fila = []
-        for j in range(len(matriz_a)):
-            if matriz_c[i][j] != "-":  # casillas no rayadas - val min
-                if matriz_a[i][j] == "x":
+        for j in range(tam):  # llenado de la nueva matriz
+            if matriz_ray[i][j] != "-":  # si la casilla de la matriza rayada es una '-'
+                if matriz_ref[i][j] == "x":  # casillas asignadas = 0
                     fila.append(0)
 
                 else:
-                    fila.append(matriz_a[i][j] - min_mb)
+                    fila.append(matriz_ref[i][j] - val_min)  # casillas no rayadas, val - val min
 
-            else:
-                if matriz_a[i][j] == "x": 
-                    fila.append(0)
 
-                elif j in col_m and matriz_a[i][j] != 0: # col_m + val min
-                    fila.append(matriz_a[i][j] + min_mb)
+            else: 
+                if matriz_ref[i][j] == "x":  # si la casilla en la matriz ref tiene una asignacion
+                    fila.append(0)  # val = 0
+
+                elif j in marca_b and matriz_ref[i][j] != 0:  # si la la columna tiene la marca b y la casilla no es cero en la matriz ref
+                    fila.append(matriz_ref[i][j] + val_min)  # val - val min
 
                 else:
-                    fila.append(matriz_a[i][j])
-
+                    fila.append(matriz_ref[i][j]) 
         
-        matriz_d.append(fila)
+        nueva_m.append(fila)
 
-    return matriz_d
+    return nueva_m
 
