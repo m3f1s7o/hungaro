@@ -8,17 +8,17 @@ class hungaroGui(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("hungaro.ui", self)
-
+        
+        self.labelAdvertencia.setVisible(False)
+        
         # botones
         self.botonResolver.setEnabled(True)
         self.botonResolver.clicked.connect(self.resolverHungaro)
         self.botonCrear.clicked.connect(self.crearTabla)
         
-
+    """ establece las filas y columnas de la tablas """
     def crearTabla(self):
-        # establece las filas y columnas de la tablas
         tam = int(self.spinMatriz.text())
-
         self.tablaOriginal.setRowCount(tam)
         self.tablaOriginal.setColumnCount(tam)
         # asigna nombres dinamicamente
@@ -36,6 +36,7 @@ class hungaroGui(QMainWindow):
         # establece los encabezados de las columnas para la explicacion
         self.tablaExplicacion.setHorizontalHeaderLabels([self.fieldEjeY.text(), self.fieldEjeX.text(), self.fieldMedida.text()])
         
+    """ obtiene los datos de la tabla y los manda a la resolucion """
     def resolverHungaro(self):
         tam = self.tablaOriginal.columnCount()
         matriz = []
@@ -44,14 +45,28 @@ class hungaroGui(QMainWindow):
         # obtiene la matriz original
         for i in range(tam):
             for j in range(tam):
-                v = int(self.tablaOriginal.item(i, j).text())
+                #v = int(self.tablaOriginal.item(i, j).text())
+                try:
+                    v = int(self.tablaOriginal.item(i, j).text())
+                
+                except AttributeError:
+                    self.labelAdvertencia.setVisible(True)
+                    self.labelAdvertencia.setText("Llena la tabla primero")
+                    return
+
+                except ValueError:
+                    self.labelAdvertencia.setVisible(True)
+                    self.labelAdvertencia.setText("Solo se permiten números")
+                    return
+
                 row.append(v)
 
             matriz.append(row)
             row = []
 
+        self.labelAdvertencia.setVisible(False)
         sol, expli, z = resolver(matriz)
-
+ 
         # llena la matriz de solucion
         for i in range(tam):
             for j in range(tam):
