@@ -23,7 +23,7 @@
    <string>Húngaro Calculadora</string>
   </property>
   <property name="windowOpacity">
-   <double>0.950000000000000</double>
+   <double>0.990000000000000</double>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(70, 73, 76);
@@ -333,7 +333,8 @@ color: rgb(25, 133, 161);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(76, 92, 104);
+              <string notr="true">border-top-color: rgb(76, 92, 104);
+border-left-color: rgb(76, 92, 104);
 color: rgb(220, 220, 221);</string>
              </property>
              <property name="frameShape">
@@ -511,7 +512,8 @@ color: rgb(25, 133, 161);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(76, 92, 104);
+              <string notr="true">border-top-color: rgb(76, 92, 104);
+border-left-color: rgb(76, 92, 104);
 color: rgb(220, 220, 221);</string>
              </property>
              <property name="frameShape">
@@ -638,7 +640,8 @@ color: rgb(220, 220, 221);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(76, 92, 104);
+              <string notr="true">border-top-color: rgb(76, 92, 104);
+border-left-color: rgb(76, 92, 104);
 color: rgb(220, 220, 221);</string>
              </property>
              <property name="frameShape">
