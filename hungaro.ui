@@ -23,7 +23,7 @@
    <string>Húngaro Calculadora</string>
   </property>
   <property name="windowOpacity">
-   <double>0.850000000000000</double>
+   <double>0.950000000000000</double>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(70, 73, 76);
@@ -318,7 +318,7 @@ color: rgb(25, 133, 161);</string>
            <item>
             <widget class="QTableWidget" name="tablaOriginal">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -330,10 +330,14 @@ color: rgb(25, 133, 161);</string>
               </size>
              </property>
              <property name="autoFillBackground">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);</string>
+              <string notr="true">background-color: rgb(76, 92, 104);
+color: rgb(220, 220, 221);</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="verticalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -344,6 +348,15 @@ color: rgb(25, 133, 161);</string>
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustToContents</enum>
              </property>
+             <property name="showGrid">
+              <bool>true</bool>
+             </property>
+             <property name="gridStyle">
+              <enum>Qt::DashLine</enum>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>50</number>
+             </attribute>
              <row>
               <property name="text">
                <string>F1</string>
@@ -489,13 +502,20 @@ color: rgb(25, 133, 161);</string>
            <item>
             <widget class="QTableWidget" name="tablaSolucion">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);</string>
+              <string notr="true">background-color: rgb(76, 92, 104);
+color: rgb(220, 220, 221);</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="verticalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -506,6 +526,12 @@ color: rgb(25, 133, 161);</string>
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustToContents</enum>
              </property>
+             <property name="gridStyle">
+              <enum>Qt::DashLine</enum>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>50</number>
+             </attribute>
              <row>
               <property name="text">
                <string>F1</string>
@@ -603,13 +629,20 @@ color: rgb(25, 133, 161);</string>
            <item>
             <widget class="QTableWidget" name="tablaExplicacion">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);</string>
+              <string notr="true">background-color: rgb(76, 92, 104);
+color: rgb(220, 220, 221);</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="verticalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -620,6 +653,12 @@ color: rgb(25, 133, 161);</string>
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustToContents</enum>
              </property>
+             <property name="gridStyle">
+              <enum>Qt::DashLine</enum>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>100</number>
+             </attribute>
              <row>
               <property name="text">
                <string>F1</string>
