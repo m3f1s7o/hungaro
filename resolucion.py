@@ -6,8 +6,8 @@ from datos import *
 
 """ funcion de testeo para resolver por terminal """
 def main():
-    #tabla = obtnrTabla()
-    tabla = defTabla()
+    tabla = obtnrTabla()
+    #tabla = defTabla()
 
     print_t = lambda tabla_n: print(tabulate(tabla_n, headers=["C" + str(i) for i in range(len(tabla))], tablefmt="psql"))  # imprime la tabla en una tabla con formato
 

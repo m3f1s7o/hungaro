@@ -76,7 +76,7 @@ class hungaroGui(QMainWindow):
             for j in range(3):
                 self.tablaExplicacion.setItem(i, j, QTableWidgetItem(str(expli[i][j])))
 
-        self.fieldZ.setText(str(z))
+        self.fieldZ.setText(str(z) + " " + self.fieldMedida.text())
 
 
 
