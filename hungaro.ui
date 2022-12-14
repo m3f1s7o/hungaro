@@ -333,9 +333,7 @@ color: rgb(25, 133, 161);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">border-top-color: rgb(76, 92, 104);
-border-left-color: rgb(76, 92, 104);
-color: rgb(220, 220, 221);</string>
+              <string notr="true">color: rgb(25, 133, 161);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -512,9 +510,7 @@ color: rgb(25, 133, 161);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">border-top-color: rgb(76, 92, 104);
-border-left-color: rgb(76, 92, 104);
-color: rgb(220, 220, 221);</string>
+              <string notr="true">color: rgb(25, 133, 161);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -640,9 +636,7 @@ color: rgb(220, 220, 221);</string>
               <bool>true</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">border-top-color: rgb(76, 92, 104);
-border-left-color: rgb(76, 92, 104);
-color: rgb(220, 220, 221);</string>
+              <string notr="true">color: rgb(25, 133, 161);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
